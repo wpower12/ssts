@@ -1,11 +1,12 @@
-extern crate clap;
-use clap::{Arg, App};
-
 use serde::Deserialize;  
 use reqwest::Error;
 use reqwest::header::USER_AGENT;
 
 
+// WHY DOES THIS FEEL SO NICE TO WRITE?
+// Similar to the 00 example, we want to make a
+// struct that matches the json we expect from
+// the api call.
 #[derive(Deserialize, Debug)]
 struct Train {
     orig_train: String,
@@ -19,18 +20,9 @@ struct Train {
 #[tokio::main]
 async fn main() -> Result<(), Error> {
 
-    let septa_app = App::new("simple septa train schedule")
-        .version("0.1")
-        .about("simple way to list the next arriving trains for a pair of stops on septa regional rail lines.")
-        .arg(Arg::with_name("start")
-            .long("start").short("s").value_name("START_STATION"))
-        .arg(Arg::with_name("end")
-            .long("end").short("e").value_name("END_STATION"))
-        .get_matches();
-
-    let station_s = septa_app.value_of("start").unwrap_or("Temple U");
-    let station_e = septa_app.value_of("end").unwrap_or("Ft Washington");
-    let n = 10;
+    let station_s = "Temple U";
+    let station_e = "Ft Washington";
+    let n = 5;
 
     let request_url = format!("http://www3.septa.org/hackathon/NextToArrive/{s_start}/{s_end}/{num_trains}",
         s_start = station_s,
@@ -46,10 +38,10 @@ async fn main() -> Result<(), Error> {
 
     let trains: Vec<Train> = response.json().await?;
 
-    println!("           Departing    |   Arriving ");
-    println!(" Train | {:^14} | {:^14} ", station_s, station_e);
+    println!("       |   Departing  |   Arriving ");
+    println!(" Train | {:^12} | {:^12} ", station_s, station_e);
     for train in trains.iter() {
-        println!("{:6} |   {:12} |   {:12} ",
+        println!("{:6} - {:12} - {:12} ",
             train.orig_train,
             train.orig_departure_time,
             train.orig_arrival_time)
@@ -57,3 +49,4 @@ async fn main() -> Result<(), Error> {
 
     Ok(())
 }
+

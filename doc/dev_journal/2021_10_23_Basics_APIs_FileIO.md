@@ -68,3 +68,19 @@ So you give the `http://www3.septa.org/hackathon/Arrivals/` a station name, and 
 Will need to figure out how to turn that into 'line info'. Meaning, we know what station we're leaving from, we need to find the next train on the right line for the rest of it. 
 
 So this is likely schedule info, which might be on another endpoint? idk. 
+
+Ok yea there was another endpoint. The `http://www3.septa.org/hackathon/NextToArrive/{station_s}/{station_e}/10` endpoint.
+
+I have a basic demo of using that in the `02` example file. It shows how to build a train struct to match the returned json. Then some examples of simple string formatting options like alignment and min width. Quick and dirty but its working for now. Enough to get that 'MVP' working. 
+
+The next steps should be figuring out command line parameters? Give it a start/end terminal from the command line, and make sure you can handle both the errors from bad requests, user input, and all that stuff. This will be a good stepping stone before parameterizing the rest of the queries and storing things in config files. 
+
+## CLAP
+OOOOOOk lets use [this](https://docs.rs/clap/2.33.3/clap/). A command line app crate that helps you deal with parsing parameters and writing help output. Sweeeet.
+
+Ok nice. This is pretty awesome. Its a lot of chaining calls, but its very readable code, i think.
+
+There's an example `03` that shows how to build an app (an object that collects arugments, manages help printing, all that), and how to unpack them with defaults. 
+
+Also, I made a symlink between the release binary and my local/bin. So now whenever I do a release build, I'll have it on my actual system! So that's fun.
+

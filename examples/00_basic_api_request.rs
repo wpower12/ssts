@@ -51,7 +51,7 @@ async fn main() -> Result<(), Error> {
     let response = client
         .get(&request_url) // Note, this is a method, so you send a 'borrowed'
                            // reference to the actual variable. 
-        .header(USER_AGENT, "USER THIS AGENT MOTHER ****ERS")
+        .header(USER_AGENT, "much user agent, such wow.")
         .send()
         .await?;
 

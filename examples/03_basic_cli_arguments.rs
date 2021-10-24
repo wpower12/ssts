@@ -30,7 +30,7 @@ async fn main() -> Result<(), Error> {
 
     let station_s = septa_app.value_of("start").unwrap_or("Temple U");
     let station_e = septa_app.value_of("end").unwrap_or("Ft Washington");
-    let n = 10;
+    let n = 5;
 
     let request_url = format!("http://www3.septa.org/hackathon/NextToArrive/{s_start}/{s_end}/{num_trains}",
         s_start = station_s,
